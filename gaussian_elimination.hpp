@@ -33,26 +33,4 @@ void gaussian_elimination(std::vector<std::vector<double>>& mat) {
       h++;
     }
   }
-
-  // put in reduced row echelon form
-  for (int k = 0; k < n; k++) {
-    // find leading coefficient
-    int h = 0;
-    while (h < m && std::fabs(mat[k][h]) <= 1e-9) h++;
-
-    // check for zero row
-    if (h < m) {
-      // divide row by leading coefficient
-      const double lc = mat[k][h];
-      mat[k][h] = 1;
-      for (int j = h + 1; j < m; j++) mat[k][j] /= lc;
-
-      // subtract other rows by leading coefficient multiple
-      for (int i = k - 1; i >= 0; i--) {
-        const double f = mat[i][h];
-        mat[i][h] = 0;
-        for (int j = h + 1; j < m; j++) mat[i][j] -= mat[k][j] * f;
-      }
-    }
-  }
 }
