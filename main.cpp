@@ -27,29 +27,36 @@ int main() {
       dfs(i, adj, vis);
     }
 
-  // find number of connected components using
-  // nullspace of laplacian matrix
-  std::vector<std::vector<double>> lap = laplacian(adj);
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) std::cout << lap[i][j] << " ";
+  // print laplacian
+  std::vector<std::vector<long long>> lap = laplacian(adj);
+  std::cout << "Laplacian(G):" << std::endl;
+  for (const std::vector<long long>& row : lap) {
+    for (const long long& cell : row) std::cout << cell << " ";
     std::cout << std::endl;
   }
   std::cout << std::endl;
-  gaussian_elimination(lap);
-  for (int i = 0; i < n; i++) {
-    for (int j = 0; j < n; j++) std::cout << lap[i][j] << " ";
-    std::cout << std::endl;
-  }
+
+  // find number of connected components using
+  // nullspace of laplacian matrix
+  gaussian_elimination(lap, 1000000007);
   int lap_comps = 0;
   for (int i = 0; i < n; i++) {
     bool null_row = true;
     for (int j = 0; j < n; j++)
-      if (std::fabs(lap[i][j]) > 1e-9) {
+      if (lap[i][j] != 0) {
         null_row = false;
         break;
       }
     if (null_row) lap_comps++;
   }
+
+  // print eliminated laplacian
+  std::cout << "Eliminated Laplacian(G):" << std::endl;
+  for (const std::vector<long long>& row : lap) {
+    for (const long long& cell : row) std::cout << cell << " ";
+    std::cout << std::endl;
+  }
+  std::cout << std::endl;
 
   std::cout << dfs_comps << std::endl;
   std::cout << lap_comps << std::endl;
