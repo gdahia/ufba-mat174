@@ -99,26 +99,14 @@ int main() {
   std::mt19937 gen(rd());
 
   // varying graph cardinality
-  std::ofstream gauss_v_file("gauss_v.txt");
-  std::ofstream dfs_v_file("dfs_v.txt");
+  std::ofstream gauss_file("gauss.txt");
+  std::ofstream dfs_file("dfs.txt");
   for (int i = 10; i <= 2000; i += 20) {
     double m1, s1, m2, s2;
     std::tie(m1, s1, m2, s2) = random_graph_experiment(i, 0.5, 100, gen);
 
-    dfs_v_file << std::fixed << std::setprecision(4) << i << " " << m1 << " "
-               << s1 << std::endl;
-    gauss_v_file << i << " " << m2 << " " << s2 << std::endl;
-  }
-
-  // varying graph density
-  std::ofstream gauss_e_file("gauss_e.txt");
-  std::ofstream dfs_e_file("dfs_e.txt");
-  for (int i = 1; i < 100; i++) {
-    double m1, s1, m2, s2;
-    std::tie(m1, s1, m2, s2) =
-        random_graph_experiment(500, i / 100.0, 100, gen);
-
-    dfs_e_file << i << " " << m1 << " " << s1 << std::endl;
-    gauss_e_file << i << " " << m2 << " " << s2 << std::endl;
+    dfs_file << std::fixed << std::setprecision(4) << i << " " << m1 << " "
+             << s1 << std::endl;
+    gauss_file << i << " " << m2 << " " << s2 << std::endl;
   }
 }
